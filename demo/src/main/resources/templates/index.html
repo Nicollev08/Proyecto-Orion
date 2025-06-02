@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tienda de videojuegos ORION">
+  <title>ORION GAMES</title>
+  <link th:href="@{/CSS/styles.css}" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="header-left">
+        <a href="#inicio">
+          <img th:src="@{/IMG/Orion.webp}" alt="Tienda de Videojuegos ORION" id="logo" />
+        </a>
+      </div>
+
+      <div class="head-center">
+        <h1>TIENDA DE VIDEOJUEGOS ORION</h1>
+      </div>
+
+
+      <!-- Menú de navegación -->
+      <div class="header-right">
+        <button id="loginBtn">Iniciar sesión</button>
+        <button id="registerBtn">Registrarse</button>
+        <button id="searchBtn">Buscar</button>
+        <button id="cartBtn">Carrito (0)</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="catalogo">
+      <h2>CATÁLOGO DE VIDEOJUEGOS</h2>
+
+      <!-- Se cargan los videojuegos -->
+      <div class="product" th:each="videojuego : ${videojuegos}" th:data-id="${videojuego.id}">
+        <img th:src="@{${videojuego.imagen}}" th:alt="${videojuego.nombre}">
+        <h3 th:text="${videojuego.nombre}"></h3>
+        <p th:text="'$' + ${#numbers.formatDecimal(videojuego.precio, 1, 2)}"></p>
+        <p id="genero" th:text="${videojuego.genero}"></p>
+        <button class="addToCart" th:attr="data-id=${videojuego.id},
+                   data-name=${videojuego.nombre},
+                   data-price=${videojuego.precio},
+                   data-image=${videojuego.imagen}">
+          Agregar al carrito
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Tienda de Videojuegos ORION</p>
+  </footer>
+
+  <!-- Modal de Iniciar Sesión -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeLoginModal">&times;</span>
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Registro -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeRegisterModal">&times;</span>
+      <h2>Registrarse</h2>
+      <form id="registerForm">
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" placeholder="@gmail.com" required>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="creditCard">Número de tarjeta de crédito:</label>
+        <input type="text" id="creditCard" name="creditCard" placeholder="1234 5678 9876 5432" required>
+
+        <button type="submit">Registrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Información del Juego -->
+  <div id="gameInfoModal" class="modal">
+    <div class="modal-content game-info">
+      <span class="close" id="closeGameInfoModal">&times;</span>
+      <div class="game-info-left">
+        <img id="gameImage" src="" alt="Imagen del juego">
+        <h3 id="gameName">Nombre del Juego</h3>
+        <p id="gamePrice">$0.00</p>
+        <button id="modalAddToCartBtn">Agregar al carrito</button>
+      </div>
+      <div class="game-info-right">
+        <h4>Descripción:</h4>
+        <p id="gameDescription">Descripción del juego aquí...</p>
+      </div>
+    </div>
+  </div>
+
+  <!--Estructura Carrito-->
+  <section id="cart" class="cart">
+    <div id="cart" class="cart">
+      <h2>Carrito de Compras</h2>
+      <ul id="cartItems"></ul>
+      <div class="cart-totals">
+        <p>Total: $<span id="cartTotal">0.00</span></p>
+      </div>
+      <button id="clearCartBtn">Vaciar Carrito</button>
+    </div>
+  </section>
+
+  <!-- Cargar la funcionalidad de JavaScript -->
+  <script th:src="@{/JS/carrito.js}"></script>
+  <script th:src="@{/JS/login.js}"></script>
+  <script th:src="@{/JS/registro.js}"></script>
+  <script th:src="@{/JS/info.js}"></script>
+  <script th:src="@{/JS/wishList.js}"></script>
+
+</body>
+
+</html>
