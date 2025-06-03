@@ -1,5 +1,5 @@
 // Carrito de compras
-let cart = []; // Array que almacena los productos del carrito
+let cart = [];
 
 // Función para actualizar el carrito en el DOM
 function updateCart() {
